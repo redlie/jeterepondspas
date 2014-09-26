@@ -1,0 +1,11 @@
+{
+  "name": "jeterepondspas",
+  "subdomain": "redlie-jeterepondspas",
+  "scripts": {
+    "start": "node server"
+  },
+  "version": "0.0.1-30",
+  "engines": {
+    "node": "0.10.x"
+  }
+}

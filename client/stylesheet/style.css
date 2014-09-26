@@ -1,0 +1,163 @@
+body {
+	background-color: rgb(255, 118, 194);
+	background-image: url('http://localhost:3000/bck_02.png');
+}
+
+.main {
+	border: 6px solid white;
+	margin: 0 auto;
+	max-width: 59%;
+	min-height: 1271px;
+	border-radius: 12px;
+	background-color: rgb(255, 118, 194);
+}
+
+.login1 {
+	position: relative;
+	left: 3%;
+	top: 15px;
+	z-index: 1000;
+}
+
+.container-player {
+	z-index: 100;
+	position: absolute;
+	left: 40%;
+}
+
+.img-title1 {
+	max-width: 80%;
+	margin: 0px auto;
+	display: block;
+	margin-top: 15px;
+}
+
+
+
+.accroche-container1 {
+	height: 350px;
+	width: 100%;
+}
+
+.sign1 {
+	left: 16%;
+	top: 8%;
+	position: absolute;
+}
+
+.img-sign1 {
+	max-width: 74%;
+	margin-top: 61px;
+}
+
+.gave1 {
+	position: relative;
+	left: 34%;
+}
+
+.img-gave1 {
+	max-width: 74%;
+}
+
+.soule1 {
+	left: 44%;
+	position: relative;
+}
+
+.img-soule1 {
+	max-width: 74%;
+}
+
+
+
+.accroche-container2 {
+	height: 350px;
+	width: 100%;
+}
+
+.woman1 {
+	left: 16%;
+	top: 48%;
+	position: absolute;
+}
+
+.img-woman1 {
+	max-width: 74%;
+	margin-top: 61px;
+}
+
+.relou1 {
+	left: 32%;
+	position: relative;
+	top: -130px;
+}
+
+.img-relou1 {
+	max-width: 74%;
+}
+
+.soule2 {
+	right: -78%;
+	position: relative;
+	top: -244px;
+}
+
+.img-soule2 {
+	max-width: 74%;
+}
+
+
+
+.accroche-container3 {
+	height: 350px;
+	width: 100%;
+}
+
+.teeshirt1 {
+	left: 36%;
+	position: relative;
+	top: -89%;
+}
+
+.img-teeshirt1 {
+	max-width: 74%;
+}
+
+.welcome {
+	text-align: center;
+}
+
+
+.img-ok {
+	width:15px;
+	height:15px
+}
+
+.img-ko {
+	width:15px;
+	height:15px
+}
+
+.img-sent-ok{
+	width:15px;
+	height:15px
+}
+
+.img-sent-ko{
+	width:15px;
+	height:15px
+}
+
+
+
+
+
+.footer {
+	position: relative;
+	width: 102%;
+	height: 22px;
+	background: rgb(156, 79, 138);
+	left: -10px;
+	opacity: 0.8;
+	border-radius: 12px;
+}

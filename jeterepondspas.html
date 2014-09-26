@@ -3,13 +3,184 @@
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+	<div class="main">
+		<div class="login1">{{> loginButtons}}</div>
+		<br><br>
+		{{> main}}
+	</div>
 
-  {{> hello}}
-  {{> loginButtons}}
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+
+<template name="main">
+	{{#if isAdmin}}
+		{{> adminPane}}
+	{{else}}	
+		{{> userPane}}
+	{{/if}}
+</template>
+
+<template name="adminPane">
+	{{> usersPane}}
+	<br><br>
+	{{> visitorsPane}}
+</template>
+
+
+<template name="usersPane">
+	<div class="users-content">
+		Total users : {{usersCount}}
+		<select class="uLimit">
+			{{#each const.pagination.options}}
+			  <option {{isSelected option}} value="{{option}}">SHOW {{label}}</option>
+			{{/each}}
+		</select>
+		<table class="users" style="border:1px solid black; font-size: 11px;">
+			 <tr>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Roles</th>
+				<th>[VEmail 1 :</th>
+				<th>Sent</th>
+				<th>Verified]</th>
+				<th>[VEmail 2 :</th>
+				<th>Sent</th>
+				<th>Verified]</th>
+				<th>[VEmail 3 :</th>
+				<th>Sent</th>
+				<th>Verified]</th>
+				<th>Created at</th>
+				<th>Delete</th>
+			 </tr>
+			{{#each users}}
+			<tr>
+				<td>{{username}}</td>
+				<td>{{getEmail}}</td>
+				<td>{{profile.roles}}</td>
+				<td>{{contact1.email}}</td>
+				<td>{{#if contact1.sent}}<img src="{{const.rooturl}}send_mail_ok.png" class="img-sent-ok">{{else}}<img src="{{const.rooturl}}send_mail_ko.png" class="img-sent-ko">{{/if}}</td>
+				<td>{{#if contact1.verified}}<img src="{{const.rooturl}}ok.png" class="img-ok">{{else}}<img src="{{const.rooturl}}ko.png" class="img-ko">{{/if}}</td>
+				<td>{{contact2.email}}</td>
+				<td>{{#if contact2.sent}}<img src="{{const.rooturl}}send_mail_ok.png" class="img-sent-ok">{{else}}<img src="{{const.rooturl}}send_mail_ko.png" class="img-sent-ko">{{/if}}</td>
+				<td>{{#if contact2.verified}}<img src="{{const.rooturl}}ok.png" class="img-ok">{{else}}<img src="{{const.rooturl}}ko.png" class="img-ko">{{/if}}</td>
+				<td>{{contact3.email}}</td>
+				<td>{{#if contact3.sent}}<img src="{{const.rooturl}}send_mail_ok.png" class="img-sent-ok">{{else}}<img src="{{const.rooturl}}send_mail_ko.png" class="img-sent-ko">{{/if}}</td>
+				<td>{{#if contact3.verified}}<img src="{{const.rooturl}}ok.png" class="img-ok">{{else}}<img src="{{const.rooturl}}ko.png" class="img-ko">{{/if}}</td>
+				<td>{{formatDate createdAt}}</td>
+				<td>{{#if isCustomer }}<a class="deleteuser" style="cursor:pointer" title="Delete the user !"><img src="{{const.rooturl}}ko.png" class="img-ko"></a>{{/if}}</td>
+			</tr>
+			{{/each}}
+		</table>
+		{{#if canPaginate}}
+			<div class="paginate">
+				<span class="back">←</span>
+				<span class="page">Page {{current_page}}</span>
+				<span class="next">→</span>
+			</div>
+		{{/if}}
+	</div>
+</template>
+
+<template name="visitorsPane">
+	<div class="visitors-content">
+		Total visits : {{visits}}
+		<select class="vLimit">
+			{{#each const.pagination.options}}
+			  <option {{isSelected option}} value="{{option}}">SHOW {{label}}</option>
+			{{/each}}
+		</select>
+		<table class="visitors" style="border:1px solid black; font-size: 11px;">
+			 <tr>
+				<th>Visited</th>
+				<th>AppCodeName</th> 
+				<th>AppName</th>
+				<th>AppVersion</th>
+				<th>Product</th> 
+				<th>Platform</th>
+				<th>UserAgent</th>
+				<th>Language</th> 
+				<th>SystemLanguage</th>
+				<th>CookieEnabled</th>
+			  </tr>
+		{{#each visitors}}
+			<tr>
+				<td>{{formatDate createdAt}}</td>
+				<td>{{appCodeName}}</td>
+				<td>{{appName}}</td>
+				<td>{{appVersion}}</td>
+				<td>{{product}}</td>
+				<td>{{platform}}</td>
+				<td>{{userAgent}}</td>
+				<td>{{language}}</td>
+				<td>{{systemLanguage}}</td>
+				<td>{{cookieEnabled}}</td>
+			</tr>
+		{{/each}}
+		</table>
+		{{#if canPaginate}}
+			<div class="paginate">
+				<span class="back">←</span>
+				<span class="page">Page {{current_page}}</span>
+				<span class="next">→</span>
+			</div>
+		{{/if}}
+	</div>
+</template>
+
+<template name="userPane">
+	{{#if currentUser}}
+		<div class="welcome">
+			<h1>Bienvenue {{currentUser.username}} sur le site jeterepondspas !</h1>
+			Télécharge maintenant la sonnerie : <a href="{{const.rooturl}}{{const.mp3url}}.mp3" download>Lien</a>
+			<br>
+			<div>
+				<p>Propose à 3 de tes ami(e)s de s'inscrire et tu pourras télécharger le morceau complet jeterepondspas</p>
+				<p>Email 1 : <input class="email1" type="text" value="{{currentUser.contact1.email}}"> {{#if currentUser.contact1.sent}}<img src="{{const.rooturl}}send_mail_ok.png" class="img-sent-ok">{{else}}<img src="{{const.rooturl}}send_mail_ko.png" class="img-sent-ko">{{/if}} {{#if currentUser.contact1.verified}}<img src="{{const.rooturl}}ok.png" class="img-ok">{{else}}<img src="{{const.rooturl}}ko.png" class="img-ko">{{/if}}</p>
+				<p>Email 2 : <input class="email2" type="text" value="{{currentUser.contact2.email}}"> {{#if currentUser.contact2.sent}}<img src="{{const.rooturl}}send_mail_ok.png" class="img-sent-ok">{{else}}<img src="{{const.rooturl}}send_mail_ko.png" class="img-sent-ko">{{/if}} {{#if currentUser.contact2.verified}}<img src="{{const.rooturl}}ok.png" class="img-ok">{{else}}<img src="{{const.rooturl}}ko.png" class="img-ko">{{/if}}</p>
+				<p>Email 3 : <input class="email3" type="text" value="{{currentUser.contact3.email}}"> {{#if currentUser.contact3.sent}}<img src="{{const.rooturl}}send_mail_ok.png" class="img-sent-ok">{{else}}<img src="{{const.rooturl}}send_mail_ko.png" class="img-sent-ko">{{/if}} {{#if currentUser.contact3.verified}}<img src="{{const.rooturl}}ok.png" class="img-ok">{{else}}<img src="{{const.rooturl}}ko.png" class="img-ko">{{/if}}</p>
+				{{#if currentUser.senttrackmail}}
+					Télécharge maintenant le morceau : <a href="{{const.rooturl}}{{const.mp3url}}_full.mp3" download>Lien</a>
+				{{else}}
+					<input type="button" class="send" value="J'envoie l'invitation">	
+				{{/if}}				
+			</div>
+		</div>
+	{{else}}
+		<div class="container-player">
+			<audio id="player" src="{{const.rooturl}}e1a086_3ce51f1f273a4fa6b285e37ef61b3e77.mp3" type="audio/mpeg" loop controls >autoplayYour browser does not support the audio element.</audio>
+		</div>
+		<img src="{{const.rooturl}}jtrp_01.png" class="img-title1">
+		<div class="accroche-container1">
+			<div class="sign1">
+				<img src="{{const.rooturl}}star_01.png" class="img-sign1">
+			</div>
+			<div class="gave1">
+				<img src="{{const.rooturl}}gave_01.png" class="img-gave1">
+			</div>
+			<div class="soule1">
+				<img src="{{const.rooturl}}soule_01.png" class="img-soule1">
+			</div>
+		</div>
+		<div class="accroche-container2">
+			<div class="woman1">
+				<img src="{{const.rooturl}}woman_01.png" class="img-woman1">
+			</div>
+			<div class="relou1">
+				<img src="{{const.rooturl}}relou_01.png" class="img-relou1">
+			</div>
+			<div class="soule2">
+				<img src="{{const.rooturl}}soule_02.png" class="img-soule2">
+			</div>
+		</div>
+		<div class="accroche-container3">
+			<div class="teeshirt1">
+				<a href="{{const.facebookurl}}" target="_blank">
+					<img src="{{const.rooturl}}teeshirt_01.png" class="img-teeshirt1">
+				</a>
+			</div>
+		</div>
+		<div class="footer">
+			<p>© 2014 by MoonLand Music</p>
+		</div>
+	{{/if}}
 </template>
